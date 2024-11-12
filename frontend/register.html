@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <link rel="stylesheet" href="/frontend/css/register.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Signup</h2>
+    <div id="signup-message" class="message"></div>
+    <div class="form-group">
+      <label for="signup-username">Username</label>
+      <input type="text" id="signup-username" placeholder="Enter username" required>
+    </div>
+    <div class="form-group">
+      <label for="signup-email">Email</label>
+      <input type="email" id="signup-email" placeholder="Enter email" required>
+    </div>
+    <div class="form-group">
+      <label for="signup-password">Password</label>
+      <input type="password" id="signup-password" placeholder="Enter password" required>
+    </div>
+    <button id="signup-btn" class="btn" onclick="handleSignup()">Signup</button>
+   
+    <p>Already have an account? <a href="/frontend/login.html">Login</a></p>
+
+  </div>
+
+  <script>
+    const API_BASE_URL = "http://localhost:3000/api"; // Your API base URL
+
+    function handleSignup() {
+      const username = document.getElementById('signup-username').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const button = document.getElementById('signup-btn');
+      const messageDiv = document.getElementById('signup-message');
+
+      // Disable the button and show loading text
+      button.disabled = true;
+      button.textContent = "Signing Up...";
+      messageDiv.textContent = "";
+
+      // Check if all fields are filled
+      if (!username || !email || !password) {
+        alert("All fields are required!");
+        button.disabled = false;
+        button.textContent = "Signup";
+        return;
+      }
+
+      // Send the signup request
+      fetch(`${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          messageDiv.style.color = "green";
+          messageDiv.textContent = data.message;
+        } else {
+          messageDiv.style.color = "red";
+          messageDiv.textContent = data.error || "Signup failed!";
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred during signup. Please try again.");
+      })
+      .finally(() => {
+        // Re-enable the button and reset text after the request is completed
+        button.disabled = false;
+        button.textContent = "Signup";
+      });
+    }
+  </script>
+</body>
+</html>

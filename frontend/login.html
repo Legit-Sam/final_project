@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label for="login-email">Email</label>
+      <input type="email" id="login-email" placeholder="Enter email" required>
+    </div>
+    <div class="form-group">
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" placeholder="Enter password" required>
+    </div>
+    <button id="login-btn" onclick="handleLogin(); return false;">Login</button>
+    <div id="login-message" class="message"></div>
+
+    <p>Don't have an account? <a href="/frontend/register.html">Register</a></p>
+  </div>
+  
+  <script>
+    const API_BASE_URL = "http://localhost:3000/api"; // Your API base URL
+
+    function handleLogin() {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const button = document.getElementById('login-btn');
+        const messageDiv = document.getElementById('login-message');
+
+        // Disable the button and show loading text
+        button.disabled = true;
+        button.textContent = "Logging In...";
+        messageDiv.textContent = "";
+
+        // Check if all fields are filled
+        if (!email || !password) {
+            alert("All fields are required!");
+            button.disabled = false;
+            button.textContent = "Login";
+            return;
+        }
+
+        // Send the login request
+        fetch(`${API_BASE_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.token) {
+                // Assuming the API returns a token on successful login
+                messageDiv.style.color = "green";
+                messageDiv.textContent = "Login successful!";
+                // Store the token in localStorage or sessionStorage
+                localStorage.setItem('token', data.token);
+                // Redirect to another page or perform other actions
+                // Example: window.location.href = '/dashboard.html'; // Uncomment to redirect
+            } else {
+                messageDiv.style.color = "red";
+                messageDiv.textContent = data.error || "Login failed!";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred during login. Please try again.");
+        })
+        .finally(() => {
+            // Re-enable the button and reset text after the request is completed
+            button.disabled = false;
+            button.textContent = "Login";
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<html>
+ <head>
+  <title>
+    TaskMaster
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet"  href="task.css"/>
+ </head>
+ <body>
+  <div class="sidebar">
+   <div class="logo">
+    <img alt="CRMHUB Logo" height="30" src="https://storage.googleapis.com/a1aa/image/jGhv00XtnUpZEVFJceOARKDBqJOl63Xv23130Ebqhq6s4B4JA.jpg" width="30"/>
+    <span>
+      TaskMaster
+    </span>
+   </div>
+   <ul>
+    <li>
+     <i class="fas fa-home">
+     </i>
+     Home
+    </li>
+    <li>
+     <i class="fas fa-user">
+     </i>
+     Accounts
+    </li>
+   
+ 
+    <li>
+     <i class="fas fa-calendar">
+     </i>
+     Calendar
+    </li>
+  
+    <li class="active">
+     <i class="fas fa-tasks">
+     </i>
+     Activities
+    </li>
+  
+    <li>
+     <i class="fas fa-chart-bar">
+     </i>
+     Reports
+    </li>
+   </ul>
+   <ul>
+    <li>
+     <i class="fas fa-cog">
+     </i>
+     Setting
+    </li>
+    <li>
+     <i class="fas fa-sign-out-alt">
+     </i>
+     Log out
+    </li>
+   </ul>
+  </div>
+  <div class="main-content">
+   <div class="header">
+    <div class="search-bar">
+     <i class="fas fa-search">
+     </i>
+     <input placeholder="Search..." type="text"/>
+    </div>
+    <div class="actions">
+     <i class="fas fa-question-circle">
+     </i>
+     <i class="fas fa-bell">
+     </i>
+     <i class="fas fa-user-circle">
+     </i>
+     <div class="add-task">
+      <i class="fas fa-plus">
+      </i>
+      Add Tasks
+     </div>
+    </div>
+   </div>
+
+    <!-- Modal for adding task -->
+    <div id="addTaskModal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="closeModalBtn">&times;</span>
+          <h2>Create New Task</h2>
+          <form id="taskForm">
+            <div>
+              <label for="title">Title</label>
+              <input type="text" id="title" name="title" required />
+            </div>
+            <div>
+              <label for="description">Description</label>
+              <textarea id="description" name="description" required></textarea>
+            </div>
+            <div>
+              <label for="priority">Priority</label>
+              <select id="priority" name="priority" required>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <div>
+              <label for="deadline">Deadline</label>
+              <input type="date" id="deadline" name="deadline" required />
+            </div>
+            <button type="submit">Add Task</button>
+          </form>
+        </div>
+      </div>
+
+
+
+
+      <div class="tasks">
+        <h2>Tasks</h2>
+        <div class="task-columns">
+          <div class="task-column" id="not-started">
+            <h3>Not Started</h3>
+          </div>
+          <div class="task-column" id="started">
+            <h3>Started</h3>
+          </div>
+          <div class="task-column" id="in-progress">
+            <h3>In Progress</h3>
+          </div>
+          <div class="task-column" id="completed">
+            <h3>Completed</h3>
+          </div>
+        </div>
+      </div>
+      
+  </div>
+  <script src="task.js"></script>
+ </body>
+
+</html>
